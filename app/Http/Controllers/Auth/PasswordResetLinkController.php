@@ -17,9 +17,7 @@ class PasswordResetLinkController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $request->validate([
-            'email' => ['required', 'email'],
-        ]);
+        $request->validate(['email' => 'required|email|exists:users,email']);
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
@@ -28,11 +26,6 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        if ($status != Password::RESET_LINK_SENT) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
-        }
 
         return response()->json(['status' => __($status)]);
     }
