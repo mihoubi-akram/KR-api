@@ -27,6 +27,9 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'restaurant_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|regex:/^\+?[0-9]{7,15}$/',
+            'location' => 'required|string|max:500',
         ];
     }
     protected function failedValidation(Validator $validator)
